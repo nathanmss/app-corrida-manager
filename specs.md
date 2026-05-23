@@ -1568,3 +1568,34 @@ Ao final de toda sessão de trabalho:
 
 **Próximo passo recomendado:**
 - Entrar no painel e buscar por `Teste Verificação Admin` ou pelos códigos `492EC1AA`, `AF3CBEF3`, `BDEB34A3` e `C26D74FB`.
+
+### 2026-05-23 — Plano de resolução de vulnerabilidades
+
+**Agente:** Codex
+**Escopo:** Analisou o relatório de vulnerabilidades externo e criou um plano de correção priorizado.
+**Arquivos alterados:**
+- `resolucao-vulnerabilidades.md`
+- `specs.md`
+
+**O que mudou:**
+- Criado plano de resolução com diagnóstico por vulnerabilidade, tarefas, critérios de aceite e validações.
+- Priorizadas correções de HTTPS/TLS, CORS por allowlist, métodos CORS, Helmet/cabeçalhos de segurança, remoção de `X-Powered-By`, cookie admin seguro, rate limit e revisão de CSRF.
+- Documentadas validações esperadas com `curl` e Playwright após implementação.
+
+**Validação realizada:**
+- Revisado `relatorio-vulnerabilidades.md`.
+- Revisados `artifacts/api-server/src/app.ts`, `artifacts/api-server/package.json`, `.env.example`, `docs/deploy-coolify.md` e rotas admin.
+- Consultado Context7 para configuração de CORS com allowlist no Express.
+- Context7 atingiu limite de cota anônima ao consultar Helmet; usada documentação pública oficial do Helmet como referência complementar.
+
+**Pendente:**
+- Implementar as tarefas do plano.
+- Configurar domínio HTTPS definitivo no Coolify.
+- Reexecutar a varredura leve do relatório após as correções.
+
+**Riscos/observações:**
+- O relatório `relatorio-vulnerabilidades.md` está presente no workspace, mas ainda não estava versionado antes desta sessão.
+- Nenhuma vulnerabilidade foi corrigida nesta sessão; o trabalho foi de análise e planejamento.
+
+**Próximo passo recomendado:**
+- Começar por HTTPS definitivo no Coolify e, em paralelo, implementar CORS restrito e headers de segurança no Express.
