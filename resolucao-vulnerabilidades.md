@@ -7,6 +7,23 @@
 
 Este plano transforma o relatorio de vulnerabilidades em tarefas executaveis. A prioridade antes de abrir inscricoes ao publico e eliminar exposicoes de dados pessoais por configuracao de transporte, CORS e cabecalhos HTTP.
 
+## Status de execucao
+
+Atualizado em 2026-05-23:
+
+- [x] `TASK-004` CORS por allowlist implementado.
+- [x] `TASK-005` Metodos e headers CORS restringidos.
+- [x] `TASK-006` Helmet e cabecalhos de seguranca implementados.
+- [ ] `TASK-007` HSTS pendente ate existir dominio definitivo com HTTPS confiavel.
+- [x] `TASK-008` `X-Powered-By` removido.
+- [x] `TASK-009` Rate limit inicial no login admin implementado.
+- [ ] `TASK-002` HTTPS definitivo pendente ate compra/configuracao do dominio.
+- [ ] `TASK-003` Cookie estritamente `Secure` em producao final pendente ate HTTPS definitivo.
+- [ ] `TASK-010` Revisao/decisao final de CSRF pendente.
+- [ ] `TASK-011` Fallback SPA para caminhos sensiveis pendente.
+- [ ] `TASK-012` Regressao funcional completa em producao pendente.
+- [ ] `TASK-013` Reexecucao da auditoria leve em producao pendente.
+
 ## Diagnostico resumido
 
 | ID | Tema | Severidade | Diagnostico no codigo atual | Decisao |

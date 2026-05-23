@@ -116,6 +116,8 @@ Variáveis obrigatórias no Coolify:
 Variáveis úteis:
 
 - `LOG_LEVEL=info`
+- `CORS_ALLOWED_ORIGINS` com origens externas permitidas, separadas por vírgula. Para o container único com frontend e API no mesmo domínio, pode ficar vazio.
+- `ENABLE_HSTS=false` enquanto o domínio definitivo HTTPS não estiver configurado; use `true` depois do HTTPS confiável.
 - `ADMIN_EMAIL`
 - `ADMIN_PASSWORD`
 - `ADMIN_NAME`

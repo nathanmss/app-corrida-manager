@@ -1,5 +1,6 @@
 import * as oidc from "openid-client";
 import { Router, type IRouter, type Request, type Response } from "express";
+import { rateLimit } from "express-rate-limit";
 import {
   GetCurrentAuthUserResponse,
   ExchangeMobileAuthorizationCodeBody,
@@ -24,6 +25,17 @@ import { verifyPassword } from "../lib/password";
 const OIDC_COOKIE_TTL = 10 * 60 * 1000;
 
 const router: IRouter = Router();
+
+const adminLoginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  skipSuccessfulRequests: true,
+  message: {
+    error: "Muitas tentativas de login. Aguarde alguns minutos e tente novamente.",
+  },
+});
 
 function getOrigin(req: Request): string {
   const proto = req.headers["x-forwarded-proto"] || "https";
@@ -96,7 +108,7 @@ router.get("/auth/user", (req: Request, res: Response) => {
   );
 });
 
-router.post("/admin/login", async (req: Request, res: Response) => {
+router.post("/admin/login", adminLoginLimiter, async (req: Request, res: Response) => {
   const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
   const password = typeof req.body?.password === "string" ? req.body.password : "";
 

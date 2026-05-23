@@ -34,7 +34,13 @@ NODE_ENV=production
 PORT=8080
 LOG_LEVEL=info
 DATABASE_URL=postgresql://USUARIO:SENHA@HOST:5432/BANCO
+CORS_ALLOWED_ORIGINS=
+ENABLE_HSTS=false
 ```
+
+No modelo atual de container único, o frontend e a API usam a mesma origem; por isso `CORS_ALLOWED_ORIGINS` pode ficar vazio no domínio temporário. Se a aplicação passar a consumir a API a partir de outra origem confiável, liste essa origem explicitamente, sem barra final.
+
+Mantenha `ENABLE_HSTS=false` até configurar o domínio definitivo com HTTPS confiável. Depois disso, altere para `ENABLE_HSTS=true` e valide os cabeçalhos.
 
 Configure também as variáveis usadas para criar ou atualizar o admin inicial:
 

@@ -1599,3 +1599,59 @@ Ao final de toda sessão de trabalho:
 
 **Próximo passo recomendado:**
 - Começar por HTTPS definitivo no Coolify e, em paralelo, implementar CORS restrito e headers de segurança no Express.
+
+### 2026-05-23 — Hardening inicial de segurança HTTP
+
+**Agente:** Codex
+**Escopo:** Implementou as correções de segurança que não dependem do domínio definitivo.
+**Arquivos alterados:**
+- `.env.example`
+- `README.md`
+- `docs/deploy-coolify.md`
+- `artifacts/api-server/package.json`
+- `artifacts/api-server/src/app.ts`
+- `artifacts/api-server/src/routes/auth.ts`
+- `pnpm-lock.yaml`
+- `resolucao-vulnerabilidades.md`
+- `specs.md`
+
+**O que mudou:**
+- Substituído CORS refletivo por allowlist via `CORS_ALLOWED_ORIGINS`.
+- Restringidos métodos CORS para `GET`, `POST`, `PATCH` e `OPTIONS`, e headers para `Content-Type` e `Authorization`.
+- Adicionado `helmet` com CSP, `Referrer-Policy`, `X-Content-Type-Options` e outros headers de segurança.
+- Adicionado `Permissions-Policy` e `X-Frame-Options: DENY`.
+- Removido `X-Powered-By`.
+- Adicionado rate limit inicial em `/api/admin/login`.
+- Documentadas `CORS_ALLOWED_ORIGINS` e `ENABLE_HSTS`.
+- Atualizado `resolucao-vulnerabilidades.md` com status das tarefas implementadas.
+
+**Validação realizada:**
+- Consultado Context7 para configuração de CORS com allowlist no Express.
+- `corepack pnpm install --frozen-lockfile --ignore-scripts --store-dir /Users/nathanmss/Library/pnpm/store/v11`
+- `corepack pnpm run typecheck:libs`
+- `corepack pnpm --filter @workspace/api-server run typecheck`
+- `corepack pnpm -r --filter "./artifacts/**" --filter "./scripts" --if-present run typecheck`
+- `corepack pnpm --filter @workspace/api-server run build`
+- `corepack pnpm -r --if-present run build`
+- API local em modo produção na porta `8092` validou headers de segurança e CORS com `curl`.
+- `Origin: https://attacker.test` não recebeu `Access-Control-Allow-Origin`.
+- `Origin: http://localhost:5173` recebeu `Access-Control-Allow-Origin`, `Access-Control-Allow-Credentials` e preflight com métodos restritos.
+- Playwright abriu `http://127.0.0.1:8092/`; CSP não bloqueou assets legítimos após liberar Google Fonts.
+- Rate limit local em `/api/admin/login` retornou `429` na 11ª tentativa inválida.
+
+**Pendente:**
+- Redeployar no Coolify.
+- Validar headers/CORS no domínio temporário após deploy.
+- Configurar domínio definitivo e HTTPS quando disponível.
+- Ativar HSTS apenas depois do HTTPS confiável.
+- Reavaliar cookie admin estritamente `Secure` quando o domínio definitivo estiver ativo.
+- Decidir/implementar proteção CSRF adicional para mutações admin.
+- Avaliar retorno `404` explícito para caminhos sensíveis no fallback SPA.
+
+**Riscos/observações:**
+- A validação local da home registrou erros `500` em `/api/events/active` porque não havia PostgreSQL local ativo; isso não é causado por CSP.
+- Helmet/headers foram testados localmente; ainda precisam ser verificados no ambiente Coolify após redeploy.
+- `relatorio-vulnerabilidades.md` continua não versionado por ser um relatório externo fornecido pelo usuário.
+
+**Próximo passo recomendado:**
+- Fazer push e redeploy no Coolify; depois repetir os comandos do relatório para confirmar CORS, headers e ausência de `X-Powered-By`.
