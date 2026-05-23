@@ -1471,3 +1471,35 @@ Ao final de toda sessão de trabalho:
 
 **Próximo passo recomendado:**
 - Quando o domínio definitivo estiver disponível, configurar o domínio HTTPS no Coolify, redeployar e validar o login admin completo em produção.
+
+### 2026-05-23 — Ajuste do healthcheck Docker
+
+**Agente:** Codex
+**Escopo:** Corrigiu a imagem de produção para compatibilizar o healthcheck do Coolify com o runtime Alpine.
+**Arquivos alterados:**
+- `Dockerfile`
+- `docs/deploy-coolify.md`
+- `specs.md`
+
+**O que mudou:**
+- Adicionado `curl` no estágio runtime do `Dockerfile`, onde o healthcheck do container é executado.
+- Adicionado `HEALTHCHECK` Docker explícito para `http://127.0.0.1:${PORT}/api/healthz`.
+- Atualizado o runbook do Coolify para documentar que o runtime já inclui `curl` e que o caminho recomendado de healthcheck segue sendo `/api/healthz`.
+
+**Validação realizada:**
+- Consultado Context7 para confirmar instalação de pacotes runtime em imagens Alpine com `apk add`.
+- `corepack pnpm run typecheck:libs`
+- `corepack pnpm -r --filter "./artifacts/**" --filter "./scripts" --if-present run typecheck`
+- `corepack pnpm -r --if-present run build`
+- `docker info` confirmou que o Docker CLI existe, mas o daemon Docker não está ativo nesta sessão.
+
+**Pendente:**
+- Reconstruir e publicar a imagem no Coolify para confirmar que o log `curl: not found` desaparece.
+- Validar login admin em HTTPS confiável após configurar o domínio definitivo.
+
+**Riscos/observações:**
+- `corepack pnpm run typecheck` e `corepack pnpm run build` na raiz ainda falham literalmente porque os scripts internos chamam `pnpm` e não há `pnpm` global no `PATH`; as etapas equivalentes passaram com `corepack pnpm`.
+- Não foi possível rodar `docker build` local porque o Docker daemon não está ativo.
+
+**Próximo passo recomendado:**
+- Fazer commit/push desse ajuste e redeployar no Coolify; depois validar o healthcheck e seguir com a configuração do domínio HTTPS definitivo.

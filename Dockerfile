@@ -33,7 +33,8 @@ ENV NODE_ENV=production
 ENV PORT=8080
 ENV PUBLIC_DIR=/app/artifacts/corrida-retorno-praia/dist/public
 
-RUN addgroup -g 1001 -S appgroup && \
+RUN apk add --no-cache curl && \
+    addgroup -g 1001 -S appgroup && \
     adduser -S appuser -u 1001 -G appgroup
 
 COPY --from=build --chown=appuser:appgroup /app /app
@@ -41,5 +42,8 @@ COPY --from=build --chown=appuser:appgroup /app /app
 USER appuser
 
 EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD curl -fsS "http://127.0.0.1:${PORT}/api/healthz" || exit 1
 
 CMD ["node", "--enable-source-maps", "artifacts/api-server/dist/index.mjs"]

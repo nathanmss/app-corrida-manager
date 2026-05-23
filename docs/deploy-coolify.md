@@ -23,6 +23,8 @@ Health check recomendado:
 /api/healthz
 ```
 
+O runtime da imagem inclui `curl` e um `HEALTHCHECK` Docker para esse endpoint. Se o Coolify também configurar healthcheck próprio, use o mesmo caminho `/api/healthz`.
+
 ## 2. Variáveis de produção
 
 Configure estas variáveis no app do Coolify:
