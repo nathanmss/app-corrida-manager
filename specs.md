@@ -533,11 +533,11 @@ Critérios de aceite:
 ### Marco 8 — Refinamento de UI mobile-first
 
 - [x] Usar a skill interface-design para refinamento de UI.
-- [ ] Refinar layout mobile da landing page.
+- [x] Refinar layout mobile da landing page.
 - [x] Refinar layout mobile do formulário de inscrição.
 - [x] Refinar experiência touch da seleção de percurso.
 - [x] Refinar experiência mobile de leitura do modal de termos.
-- [ ] Refinar layout mobile da página de sucesso.
+- [x] Refinar layout mobile da página de sucesso.
 - [x] Refinar cards mobile de inscrições no admin.
 - [x] Validar com Playwright em 360, 390, 430, 768 e desktop.
 - [x] Atualizar o Registro de Progresso.
@@ -552,9 +552,9 @@ Critérios de aceite:
 
 ### Marco 9 — Gestão admin e polimento da exportação
 
-- [ ] Melhorar resumos do dashboard.
+- [x] Melhorar resumos do dashboard.
 - [x] Melhorar busca por nome, CPF e WhatsApp.
-- [ ] Melhorar filtros por percurso/sexo/status.
+- [x] Melhorar filtros por percurso/sexo/status.
 - [x] Garantir que fluxos de edição/cancelamento funcionem.
 - [x] Garantir que a exportação inclua todos os campos relevantes:
   - nome;
@@ -606,7 +606,7 @@ Critérios de aceite:
 - [x] Testar exportação.
 - [x] Testar layouts mobile.
 - [ ] Testar deploy em produção.
-- [ ] Documentar problemas finais conhecidos, se houver.
+- [x] Documentar problemas finais conhecidos, se houver.
 - [x] Atualizar o Registro de Progresso.
 
 Critérios de aceite:
@@ -1401,3 +1401,33 @@ Ao final de toda sessão de trabalho:
 
 **Próximo passo recomendado:**
 - Confirmar no GitHub que o repositório remoto mostra o projeto em `main`.
+
+### 2026-05-23 — Reconciliação final de QA pendente
+
+**Agente:** Codex  
+**Escopo:** Reconciliou itens já implementados/validados e documentou pendências finais antes do deploy real.  
+**Arquivos alterados:**
+- `specs.md`
+
+**O que mudou:**
+- Marcados como concluídos os itens do Marco 8 referentes ao refinamento mobile da landing page e da página de sucesso, após implementação e validação Playwright.
+- Marcados como concluídos os itens do Marco 9 referentes aos resumos do dashboard e filtros por percurso/sexo/status, após implementação e validação Playwright.
+- Marcado como concluído o item de documentação de problemas finais conhecidos no Marco 11.
+
+**Validação realizada:**
+- Revisão do checklist contra as entradas recentes do Registro de Progresso.
+- `git status --short` confirmou o repositório limpo antes desta atualização.
+- Tentativa de checar Docker/PostgreSQL local falhou porque o Docker daemon não está ativo nesta sessão.
+
+**Pendente:**
+- Testar deploy em produção no Coolify/VPS.
+- Rodar QA com banco real novamente quando Docker/PostgreSQL local estiver ativo ou diretamente no ambiente de deploy.
+- Conferir manualmente o repositório no GitHub e as telas finais.
+
+**Riscos/observações:**
+- O QA visual/admin mais recente usou mocks de API no Playwright porque o banco local não estava disponível.
+- O build passa, mas ainda mantém warnings não fatais de sourcemap em componentes UI e chunk grande do Vite.
+- `gh` não está instalado, então fluxos futuros de PR via GitHub CLI ainda dependem dessa instalação.
+
+**Próximo passo recomendado:**
+- Fazer o primeiro deploy controlado no Coolify seguindo `docs/deploy-coolify.md`.
