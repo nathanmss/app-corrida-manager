@@ -1655,3 +1655,37 @@ Ao final de toda sessão de trabalho:
 
 **Próximo passo recomendado:**
 - Fazer push e redeploy no Coolify; depois repetir os comandos do relatório para confirmar CORS, headers e ausência de `X-Powered-By`.
+
+### 2026-05-23 — Validação pós-deploy do hardening HTTP
+
+**Agente:** Codex
+**Escopo:** Validou no Coolify o deploy do commit `515752e` com as correções iniciais de segurança HTTP.
+**Arquivos alterados:**
+- `specs.md`
+
+**O que mudou:**
+- Confirmado que o Coolify fez build do commit `515752e54c5fcc927c063382b64ed38ca6c53886`.
+- Confirmado que o novo container ficou `healthy` e o rolling update foi concluído.
+- Validados headers de segurança e CORS no domínio temporário.
+
+**Validação realizada:**
+- `GET /api/healthz` retornou `200` com `Content-Security-Policy`, `Referrer-Policy`, `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Permissions-Policy` e sem `X-Powered-By`.
+- `GET /` retornou os mesmos headers de segurança principais e sem `X-Powered-By`.
+- `Origin: https://attacker.test` em `/api/auth/user` não recebeu `Access-Control-Allow-Origin`.
+- Preflight de origem maliciosa em `/api/registrations` não recebeu headers CORS permissivos.
+- Playwright abriu `/` e `/inscricao` no domínio temporário após deploy.
+
+**Pendente:**
+- Rotacionar a senha admin porque o log do Coolify exibiu `ADMIN_PASSWORD` como build arg.
+- Marcar variáveis sensíveis no Coolify como runtime only, não disponíveis em buildtime: `ADMIN_PASSWORD`, `ADMIN_EMAIL`, `DATABASE_URL` e similares.
+- Configurar domínio definitivo com HTTPS confiável quando comprado.
+- Revalidar login admin e headers em HTTPS definitivo.
+- Ativar HSTS apenas depois do HTTPS confiável.
+
+**Riscos/observações:**
+- Playwright registrou aviso/erro de browser para `Cross-Origin-Opener-Policy` e `Origin-Agent-Cluster` porque o domínio temporário ainda usa HTTP; isso deve desaparecer com HTTPS confiável.
+- O Coolify ainda injeta variáveis como build args quando elas estão disponíveis em buildtime, gerando warning de segredo em ARG/ENV.
+- O domínio temporário não deve ser divulgado publicamente para inscrições reais enquanto não houver HTTPS.
+
+**Próximo passo recomendado:**
+- No Coolify, desativar "Available at Buildtime" para segredos e rotacionar a senha admin; depois manter o app apenas para testes até o domínio definitivo HTTPS estar disponível.
