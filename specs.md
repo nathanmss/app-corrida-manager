@@ -1492,6 +1492,7 @@ Ao final de toda sessão de trabalho:
 - `corepack pnpm -r --filter "./artifacts/**" --filter "./scripts" --if-present run typecheck`
 - `corepack pnpm -r --if-present run build`
 - `docker info` confirmou que o Docker CLI existe, mas o daemon Docker não está ativo nesta sessão.
+- Commit `600f1f1` criado e enviado para `origin/main`.
 
 **Pendente:**
 - Reconstruir e publicar a imagem no Coolify para confirmar que o log `curl: not found` desaparece.
@@ -1502,4 +1503,4 @@ Ao final de toda sessão de trabalho:
 - Não foi possível rodar `docker build` local porque o Docker daemon não está ativo.
 
 **Próximo passo recomendado:**
-- Fazer commit/push desse ajuste e redeployar no Coolify; depois validar o healthcheck e seguir com a configuração do domínio HTTPS definitivo.
+- Redeployar no Coolify a partir de `origin/main`; depois validar o healthcheck e seguir com a configuração do domínio HTTPS definitivo.
