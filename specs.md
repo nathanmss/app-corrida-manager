@@ -1537,3 +1537,34 @@ Ao final de toda sessão de trabalho:
 
 **Próximo passo recomendado:**
 - Fazer redeploy no Coolify e testar novamente `/painel/login`; se o domínio ainda for temporário HTTP, o cookie de sessão agora deve ser aceito pelo navegador.
+
+### 2026-05-23 — Inscrições de teste em produção
+
+**Agente:** Codex
+**Escopo:** Criou inscrições reais de teste pelo fluxo público em produção para conferência na área da organização.
+**Arquivos alterados:**
+- `specs.md`
+
+**O que mudou:**
+- Criadas inscrições de teste pelo formulário público usando Playwright no domínio temporário do Coolify.
+- Confirmada a criação pública de inscrições com percursos `3 km`, `5 km` e `10 km`.
+- Registrados códigos de confirmação para facilitar a busca no painel admin.
+
+**Validação realizada:**
+- Playwright preencheu e submeteu o formulário público em `/inscricao`.
+- `GET /api/registrations/492EC1AA` retornou `Teste Verificação Admin 3km 0523141003`, percurso `3 km`.
+- `GET /api/registrations/AF3CBEF3` retornou `Teste Verificação Admin 5km 0523141003`, percurso `5 km`.
+- `GET /api/registrations/BDEB34A3` retornou `Teste Verificação Admin 10km 0523141003`, percurso `10 km`.
+- `GET /api/registrations/C26D74FB` retornou `Teste Playwright Outro 0523140551`, percurso `5 km`.
+- Playwright tentou abrir `/painel/inscricoes`, mas a sessão automatizada não estava autenticada e foi redirecionada para `/painel/login`.
+
+**Pendente:**
+- Conferir visualmente no painel admin autenticado se as inscrições aparecem corretamente.
+- Remover ou cancelar as inscrições de teste antes de abrir inscrições reais ao público.
+
+**Riscos/observações:**
+- As inscrições foram criadas no banco de produção do Coolify e aparecem como dados reais até serem canceladas/removidas.
+- Para validação completa dentro do painel via Playwright, é necessário autenticar a sessão Playwright com as credenciais admin.
+
+**Próximo passo recomendado:**
+- Entrar no painel e buscar por `Teste Verificação Admin` ou pelos códigos `492EC1AA`, `AF3CBEF3`, `BDEB34A3` e `C26D74FB`.
