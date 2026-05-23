@@ -1,0 +1,197 @@
+Update the existing application with the following requirements.
+
+IMPORTANT:
+- The application user interface must remain entirely in Brazilian Portuguese (pt-BR).
+- The codebase can remain in English.
+- Keep the current stack and architecture.
+- Do not remove existing functionality.
+- Preserve public registration without participant login.
+- Only the admin/organization area requires authentication.
+
+## 1. Event name update
+
+Replace the old event name everywhere with:
+
+"Treinão Encontro das Águas — 2ª Edição"
+
+Use this exact name in all user-facing UI:
+- landing page hero
+- footer
+- admin login
+- admin layout/sidebar
+- registration page
+- success page
+- WhatsApp share text
+- page title and meta tags
+- seed/default event data
+- documentation/replit.md where applicable
+
+For technical slugs, use:
+
+"treinao-encontro-das-aguas-2-edicao"
+
+Do not leave any old references to "Corrida do Retorno da Praia" or "Retorno da Praia" in the user-facing UI.
+
+## 2. Improve the landing page copy
+
+Adjust the event description to match the new identity:
+
+"Um treinão comunitário para celebrar o encontro, o movimento e a energia das águas. Escolha seu percurso, confirme sua presença e venha participar com a gente."
+
+Keep the available routes:
+- 3 km
+- 5 km
+- 10 km
+
+Keep the visual elegant, warm, sporty and community-oriented.
+
+## 3. Add a complete Terms and Responsibility modal
+
+Currently the terms checkbox has only a short text. Replace it with a stronger flow.
+
+In the registration form, show:
+
+[ ] Li e aceito o Termo de Responsabilidade, Saúde e Ciência de Riscos.
+
+The text "Termo de Responsabilidade, Saúde e Ciência de Riscos" must be clickable and open a modal/dialog.
+
+The modal must:
+- be mobile-friendly;
+- have a max height with internal scroll;
+- show the full terms text below;
+- have a "Fechar" button;
+- have a primary button "Li e aceito os termos";
+- when the user clicks "Li e aceito os termos", close the modal and mark the checkbox as accepted.
+
+The user should not be able to submit the form unless the terms checkbox is checked.
+
+Use this full terms text in pt-BR:
+
+# Termo de Responsabilidade, Saúde e Ciência de Riscos
+
+Ao confirmar minha inscrição no Treinão Encontro das Águas — 2ª Edição, declaro, para todos os fins, que li, compreendi e aceito integralmente as condições abaixo:
+
+## 1. Participação voluntária
+
+Declaro que minha participação no evento é feita por minha livre e espontânea vontade, sem qualquer tipo de obrigação, pressão ou imposição por parte da organização, apoiadores, patrocinadores, voluntários ou terceiros envolvidos.
+
+## 2. Condição de saúde
+
+Declaro estar em condições físicas e de saúde adequadas para participar de atividade esportiva de corrida, caminhada ou treino coletivo, conforme o percurso escolhido no ato da inscrição.
+
+Declaro também que não possuo, até onde tenho conhecimento, qualquer impedimento médico, físico, cardíaco, respiratório, ortopédico ou de outra natureza que torne inadequada ou arriscada minha participação no evento.
+
+## 3. Recomendação de avaliação médica
+
+Estou ciente de que é recomendável realizar avaliação médica antes de participar de atividades físicas, especialmente em caso de histórico de problemas cardíacos, respiratórios, hipertensão, diabetes, lesões, uso de medicamentos contínuos, sedentarismo, idade avançada, gravidez ou qualquer outra condição de saúde relevante.
+
+Caso eu tenha qualquer dúvida sobre minha aptidão física, comprometo-me a buscar orientação médica antes de participar.
+
+## 4. Ciência dos riscos
+
+Estou ciente de que a participação em corrida, caminhada ou treino ao ar livre envolve riscos naturais e previsíveis, incluindo, mas não se limitando a: quedas, tropeços, torções, câimbras, mal-estar, desidratação, exaustão física, alterações de pressão, lesões musculares ou articulares, acidentes no percurso, contato com outros participantes, exposição ao sol, chuva, calor, vento ou outras condições climáticas e demais imprevistos relacionados à prática esportiva em ambiente externo.
+
+Declaro compreender esses riscos e aceitá-los integralmente.
+
+## 5. Responsabilidade pessoal
+
+Assumo total responsabilidade por minha participação, ritmo, esforço físico, hidratação, alimentação, uso de roupas e calçados adequados, bem como por respeitar meus próprios limites físicos.
+
+Comprometo-me a interromper minha participação caso sinta dor, tontura, falta de ar, mal-estar, desconforto intenso ou qualquer sinal de risco à minha saúde.
+
+## 6. Isenção de responsabilidade da organização
+
+Declaro estar ciente de que a organização, seus representantes, voluntários, apoiadores, patrocinadores e demais envolvidos no evento não serão responsabilizados por acidentes, lesões, danos físicos, danos materiais, problemas de saúde, agravamento de condições pré-existentes ou qualquer outro prejuízo decorrente da minha participação, salvo nos casos previstos em lei.
+
+## 7. Atendimento emergencial
+
+Autorizo a organização, em caso de necessidade, a acionar atendimento de emergência, primeiros socorros, ambulância, familiares ou serviços públicos/privados de saúde.
+
+Estou ciente de que eventuais despesas médicas, hospitalares, medicamentosas, exames, transporte ou atendimentos particulares decorrentes da minha participação serão de minha responsabilidade.
+
+## 8. Dados informados
+
+Declaro que todas as informações fornecidas no formulário de inscrição são verdadeiras e assumo responsabilidade por eventuais erros, omissões ou dados incompletos.
+
+Autorizo a organização a utilizar meu número de WhatsApp para comunicações relacionadas ao evento, incluindo confirmação de inscrição, avisos, alterações, orientações e informações importantes.
+
+## 9. Imagem e divulgação
+
+Autorizo, de forma gratuita, o uso de minha imagem, nome e voz em fotos, vídeos, publicações, redes sociais, materiais de divulgação e registros relacionados ao evento, sem que isso gere direito a qualquer remuneração ou indenização.
+
+## 10. Menores de idade
+
+Caso o participante seja menor de 18 anos, a inscrição deverá ser feita com ciência e autorização de seu responsável legal, que declara estar ciente dos riscos e assumir a responsabilidade pela participação do menor no evento.
+
+## 11. Alterações, adiamento ou cancelamento
+
+Estou ciente de que a organização poderá alterar percurso, horários, local, regras, programação, adiar ou cancelar o evento por motivo de segurança, clima, força maior, determinação de autoridade pública ou qualquer situação que possa comprometer a integridade dos participantes e da equipe.
+
+## 12. Aceite final
+
+Ao marcar a opção de aceite e confirmar minha inscrição, declaro que li, compreendi e concordo com este Termo de Responsabilidade, Saúde e Ciência de Riscos.
+
+## 4. Store stronger terms acceptance data
+
+Update the registration data model to store:
+
+- acceptedTerms: boolean
+- acceptedTermsAt: timestamp/date-time
+- termsVersion: string
+
+Use this default version:
+
+"2026-05-18-v1"
+
+When a public registration is submitted and acceptedTerms is true, automatically save acceptedTermsAt with the current server date/time and termsVersion with the current version.
+
+If the database schema migration is not fully implemented yet, at least update the application types and clearly document the needed migration.
+
+## 5. Mobile-first refinement
+
+Refine mobile responsiveness across the public pages.
+
+The majority of users will access this app from smartphones, so mobile UX is a priority.
+
+Requirements:
+- The landing page must look polished on small screens.
+- The event title must not overflow.
+- The hero section must not be too tall on mobile.
+- CTA buttons must be large and easy to tap.
+- Route selection cards must work very well on touch screens.
+- Registration fields must have comfortable spacing and minimum touch height.
+- The terms modal must be easy to read on mobile, with internal scrolling.
+- The submit button must be full width on mobile.
+- Avoid horizontal scrolling anywhere.
+- Test layouts at widths around 360px, 390px, 430px, 768px and desktop.
+
+## 6. Admin mobile improvement
+
+Improve the admin registrations list responsiveness.
+
+On desktop, keep the table layout.
+
+On mobile, avoid a wide overflowing table. Use either:
+- responsive cards per registration; or
+- a horizontally scrollable table with clear affordance.
+
+Prefer mobile cards if feasible.
+
+Each mobile registration card should show:
+- participant name
+- WhatsApp
+- route
+- age
+- sex
+- status
+- edit action
+
+## 7. Keep everything build-safe
+
+After the changes:
+- run typecheck;
+- run build;
+- fix any TypeScript errors;
+- ensure the registration flow works;
+- ensure the success page still works;
+- ensure admin dashboard/list/export still works.
