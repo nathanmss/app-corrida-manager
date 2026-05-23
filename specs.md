@@ -1431,3 +1431,43 @@ Ao final de toda sessão de trabalho:
 
 **Próximo passo recomendado:**
 - Fazer o primeiro deploy controlado no Coolify seguindo `docs/deploy-coolify.md`.
+
+### 2026-05-23 — Deploy inicial no Coolify
+
+**Agente:** Codex  
+**Escopo:** Configurou e executou o primeiro deploy de produção no Coolify usando o repositório GitHub e PostgreSQL gerenciado pelo Coolify.  
+**Arquivos alterados:**
+- `specs.md`
+
+**O que mudou:**
+- Criado projeto `App Corrida Manager` no Coolify.
+- Criado recurso PostgreSQL interno para `app_corrida_manager`.
+- Criada aplicação a partir de `https://github.com/nathanmss/app-corrida-manager.git` usando build pack `Dockerfile`.
+- Configurados porta interna `8080`, variáveis de produção, credenciais iniciais de admin e `DATABASE_URL` interno.
+- Configurado healthcheck HTTP em `/api/healthz`.
+- Executado deploy da aplicação; o Coolify indicou `Running (healthy)`.
+- Executados `db:push`, seed do evento e seed do admin no container via `corepack pnpm`.
+
+**Validação realizada:**
+- Consultado Context7 para confirmar detalhes atuais de configuração de aplicação Dockerfile, variáveis, portas e healthcheck no Coolify.
+- Usada a skill Playwright para toda a configuração no Coolify e smoke tests externos.
+- Deploy concluiu build, typecheck e build do frontend/backend no ambiente do Coolify.
+- `http://vy3bin1sun2nc0itfsaxwu9h.2.24.83.99.sslip.io/api/healthz` retornou `{"status":"ok"}`.
+- `http://vy3bin1sun2nc0itfsaxwu9h.2.24.83.99.sslip.io/` carregou a página pública do evento.
+- `http://vy3bin1sun2nc0itfsaxwu9h.2.24.83.99.sslip.io/inscricao` carregou o formulário de inscrição.
+- Migração/seed no container retornaram: schema aplicado, evento `Treinão Encontro das Águas — 2ª Edição` criado com percursos 3 km, 5 km e 10 km, e admin inicial criado.
+
+**Pendente:**
+- Validar login e uso do painel admin em HTTPS confiável.
+- Configurar domínio definitivo quando o usuário comprar/informar o domínio do app.
+- Revalidar domínio, certificado TLS e painel admin depois da troca de domínio.
+
+**Riscos/observações:**
+- O domínio temporário padrão foi mantido por decisão do usuário até a compra do domínio definitivo.
+- Em `NODE_ENV=production`, o cookie de sessão admin é `Secure`; no domínio temporário acessado via `http://`, o navegador não preserva a sessão administrativa.
+- A tentativa de acessar o domínio temporário por `https://` encontrou certificado não confiável e rota sem aplicação disponível para esse host HTTPS.
+- O log do healthcheck do Coolify mostrou `curl: not found`, mas o recurso foi marcado como healthy; o endpoint externo `/api/healthz` foi validado separadamente com Playwright.
+- O build mantém warnings não fatais já conhecidos de sourcemap em componentes UI, chunk grande do Vite e alerta do Docker sobre variável sensível em `ARG/ENV`.
+
+**Próximo passo recomendado:**
+- Quando o domínio definitivo estiver disponível, configurar o domínio HTTPS no Coolify, redeployar e validar o login admin completo em produção.
