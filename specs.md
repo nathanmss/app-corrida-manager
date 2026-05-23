@@ -1374,3 +1374,30 @@ Ao final de toda sessão de trabalho:
 
 **Próximo passo recomendado:**
 - Finalizar commit inicial e push para o GitHub.
+
+### 2026-05-23 — Publicação inicial no GitHub
+
+**Agente:** Codex  
+**Escopo:** Publicou o baseline local no repositório GitHub informado pelo usuário.  
+**Arquivos alterados:**
+- `specs.md`
+
+**O que mudou:**
+- Criado commit inicial `3a72007` com o baseline completo do projeto.
+- Executado push da branch `main` para `origin/main`.
+- Branch local `main` configurada para rastrear `origin/main`.
+
+**Validação realizada:**
+- `git push -u origin main`
+- Push respondeu com criação de nova branch remota `main -> main`.
+
+**Pendente:**
+- Criar um commit complementar com esta entrada do Registro de Progresso e fazer novo push.
+- Instalar/configurar `gh` futuramente se quisermos abrir PRs pelo fluxo completo GitHub.
+
+**Riscos/observações:**
+- O repositório remoto estava sem heads antes do push, então a publicação foi direta em `main`.
+- Nenhum `.env` real foi versionado; apenas `.env.example`.
+
+**Próximo passo recomendado:**
+- Confirmar no GitHub que o repositório remoto mostra o projeto em `main`.
