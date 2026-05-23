@@ -1504,3 +1504,36 @@ Ao final de toda sessão de trabalho:
 
 **Próximo passo recomendado:**
 - Redeployar no Coolify a partir de `origin/main`; depois validar o healthcheck e seguir com a configuração do domínio HTTPS definitivo.
+
+### 2026-05-23 — Correção do login admin no domínio temporário
+
+**Agente:** Codex
+**Escopo:** Corrigiu a criação do cookie de sessão admin para funcionar no domínio temporário HTTP do Coolify e continuar seguro em HTTPS.
+**Arquivos alterados:**
+- `artifacts/api-server/src/app.ts`
+- `artifacts/api-server/src/routes/auth.ts`
+- `specs.md`
+
+**O que mudou:**
+- Habilitado `trust proxy` no Express para que a aplicação reconheça corretamente o protocolo externo informado pelo proxy do Coolify.
+- Alterada a criação do cookie `sid` para usar `Secure` quando a requisição externa for HTTPS, em vez de depender apenas de `NODE_ENV=production`.
+- Mantido `HttpOnly`, `SameSite=Lax`, `path=/` e TTL da sessão admin.
+
+**Validação realizada:**
+- Consultado Context7 para confirmar `trust proxy`, `req.protocol`, `req.secure` e `res.cookie` no Express atrás de proxy reverso.
+- `corepack pnpm run typecheck:libs`
+- `corepack pnpm -r --filter "./artifacts/**" --filter "./scripts" --if-present run typecheck`
+- `corepack pnpm -r --if-present run build`
+- Playwright abriu `http://vy3bin1sun2nc0itfsaxwu9h.2.24.83.99.sslip.io/painel/login` e confirmou que a tela de login admin carrega corretamente no domínio temporário.
+
+**Pendente:**
+- Redeployar a aplicação no Coolify a partir da branch `main`.
+- Validar o login completo com as credenciais reais após o redeploy.
+- Configurar domínio HTTPS definitivo e revalidar o login admin em HTTPS confiável.
+
+**Riscos/observações:**
+- A causa provável do problema relatado em 2026-05-22 era o navegador rejeitar o cookie `Secure` em uma resposta HTTP do domínio temporário.
+- Não foi possível validar login completo nesta sessão sem expor/usar as credenciais reais do admin.
+
+**Próximo passo recomendado:**
+- Fazer redeploy no Coolify e testar novamente `/painel/login`; se o domínio ainda for temporário HTTP, o cookie de sessão agora deve ser aceito pelo navegador.

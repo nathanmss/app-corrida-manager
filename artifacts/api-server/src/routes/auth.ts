@@ -32,10 +32,14 @@ function getOrigin(req: Request): string {
   return `${proto}://${host}`;
 }
 
-function setSessionCookie(res: Response, sid: string) {
+function shouldUseSecureSessionCookie(req: Request): boolean {
+  return req.secure || req.protocol === "https";
+}
+
+function setSessionCookie(req: Request, res: Response, sid: string) {
   res.cookie(SESSION_COOKIE, sid, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: shouldUseSecureSessionCookie(req),
     sameSite: "lax",
     path: "/",
     maxAge: SESSION_TTL,
@@ -124,7 +128,7 @@ router.post("/admin/login", async (req: Request, res: Response) => {
     expires_at: Math.floor(Date.now() / 1000) + SESSION_TTL / 1000,
   });
 
-  setSessionCookie(res, sid);
+  setSessionCookie(req, res, sid);
   res.json({ user: { id: `admin:${admin.id}`, email: admin.email, firstName: admin.name, lastName: null, profileImageUrl: null } });
 });
 
@@ -226,7 +230,7 @@ router.get("/callback", async (req: Request, res: Response) => {
   };
 
   const sid = await createSession(sessionData);
-  setSessionCookie(res, sid);
+  setSessionCookie(req, res, sid);
   res.redirect(returnTo);
 });
 
